@@ -22,8 +22,10 @@
   },
   "dependencies": {
     "commander": "^2.15.1",
+    "knex": "^0.14.6",
     "mkdirp": "^0.5.1",
     "mustache": "^2.3.0",
-    "ncp": "^2.0.0"
+    "ncp": "^2.0.0",
+    "shelljs": "^0.8.2"
   }
 }

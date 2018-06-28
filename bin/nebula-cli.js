@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var program = require('commander')
+var shell = require('shelljs');
 var fs = require('fs')
 var ncp = require('ncp').ncp
 var mkdirp = require('mkdirp')
@@ -38,6 +39,10 @@ program.command('add:seeder <filename>')
   .description('generate table seeder file')
   .action(addSeeder)
 
+program.command('knex <command>')
+  .description('using the Knex CLI with nebula configurations')
+  .action(useKnex)
+
 // program.command('build', 'build for production mode')
 //   .action(function(file) { console.log(file); })
 
@@ -61,7 +66,7 @@ function copyDirTemplate (from, to, fn) {
       console.error(err)
       return;
     }
-    fn();
+    console.log('Done.')
   });
 }
 
@@ -129,4 +134,15 @@ function addMigration(fileName, cmd) {
 
 function addSeeder(fileName, cmd) {
   add('seeder', fileName);
+}
+
+
+function useKnex(command, cmd) {
+  var fileName = process.argv[4]
+
+  if (!fileName) {
+    process.exit();
+  }
+
+  shell.exec('knex ' + command + ' '  + fileName + ' --cwd');
 }
