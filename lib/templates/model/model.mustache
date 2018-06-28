@@ -1,0 +1,63 @@
+import BaseModel from './baseModel';
+import _ from 'lodash';
+
+class {{uppercaseEntity}} extends BaseModel {
+
+    /**
+     * ObjectionJS.Model-specific overrides/implementation
+     */
+
+    static get tableName() {
+        return '{{tableName}}';
+    }
+
+    static get jsonSchema() {
+        const properties = {
+            name: {type: 'string'},
+        }
+        
+        return {
+            type: 'object',
+            required: ['name'],
+            properties: _.assign(properties, super.commonProperties)
+        };
+    }
+
+    /**
+     * Relationships
+     */
+
+    // static get relationMappings() {}
+
+    /**
+     * Hooks
+     */
+
+    $beforeInsert(queryContext) {
+        super.$beforeInsert(queryContext);    
+    }
+
+    $beforeUpdate(opt, queryContext) {
+        super.$beforeUpdate(opt, queryContext);
+        console.log(opt);
+    }
+
+    /**
+     * Class-specific implementation
+     */
+
+    static get queryWhitelist() {
+        return [
+            'id', 
+            'name', 
+            'created_at', 
+            'updated_at'
+        ];
+    }
+
+    static get upsertBlackList() {
+        return [ 'created_at', 'updated_at' ] 
+    }
+}
+
+export default {{uppercaseEntity}};

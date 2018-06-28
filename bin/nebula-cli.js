@@ -7,6 +7,8 @@ var mkdirp = require('mkdirp')
 var path = require('path')
 var readline = require('readline')
 
+var add = require('./scripts/add');
+
 var VERSION = require('../package').version
 var TEMPLATE_DIR = path.join(__dirname, '..', 'lib/templates')
 
@@ -82,28 +84,11 @@ function copyTemplateMulti (fromDir, toDir, nameGlob) {
  */
 
 function createApplication(dir, cmd) {
-  // App name
   var appName = dir || 'hello-world'
-
   console.info('Generating application:', appName)
 
   mkdirp(appName)
-
   copyDirTemplate('core', dir)
-
-  // Package
-  var pkg = {
-    name: appName,
-    version: '0.0.0',
-    private: true,
-    scripts: {
-      start: 'node ./bin/www'
-    },
-    dependencies: {
-      'debug': '~2.6.9',
-      'express': '~4.16.0'
-    }
-  }
 }
 
 /**
@@ -113,7 +98,7 @@ function createApplication(dir, cmd) {
  */
 
 function addModel(fileName, cmd) {
-  console.log(fileName)
+  add('model', fileName);
 }
 
 /**
@@ -123,7 +108,7 @@ function addModel(fileName, cmd) {
  */
 
 function addController(fileName, cmd) {
-  console.log(fileName)
+  add('controller', fileName);
 }
 
 /**
@@ -133,7 +118,7 @@ function addController(fileName, cmd) {
  */
 
 function addMigration(fileName, cmd) {
-  console.log(fileName)
+  add('migration', fileName);
 }
 
 /**
@@ -143,5 +128,5 @@ function addMigration(fileName, cmd) {
  */
 
 function addSeeder(fileName, cmd) {
-  console.log(fileName)
+  add('seeder', fileName);
 }

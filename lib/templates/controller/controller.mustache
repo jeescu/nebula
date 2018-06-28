@@ -1,0 +1,116 @@
+import BaseController from './baseController';
+import {{uppercaseEntity}} from '../models/{{lowercaseEntity}}Model';
+
+class {{uppercaseEntity}}Controller extends BaseController {
+
+    browse = (req, res) => {
+        {{uppercaseEntity}}
+            .query()
+            .columns({{uppercaseEntity}}.queryWhitelist)
+            .then(({{lowercaseEntity}}s) => {
+                let resultObj = this.formatResponse(false, [], {{lowercaseEntity}}s);
+                res.status(200).json(resultObj);
+            })
+            .catch((err) => {
+                console.log(err);
+                let resultObj = this.formatResponse(true, [], {});
+                res.status(400).json(resultObj);
+            });
+    }
+    
+    read = (req, res) => {
+        let params = this.getParams(req);
+        let id = params.id || 0;
+
+        {{uppercaseEntity}}
+            .query()
+            .findById(id)
+            .columns({{uppercaseEntity}}.queryWhitelist)
+            .then(({{lowercaseEntity}}Obj) => {
+                
+                if (!{{lowercaseEntity}}Obj) {
+                    throw new Error('Invalid {{lowercaseEntity}} data.');
+                }
+                
+                let resultObj = this.formatResponse(false, [], {{lowercaseEntity}}Obj);
+                res.status(200).json(resultObj);
+            })
+            .catch((err) => {
+                console.log(err);
+                let resultObj = this.formatResponse(true, 'Invalid {{lowercaseEntity}} data.');
+                res.status(400).json(resultObj); 
+            });
+    }
+
+    edit = (req, res) => {
+        let params = this.filterParams(
+            this.getParams(req), 
+            {{uppercaseEntity}}.upsertBlackList
+        );
+        
+        if (params.hasOwnProperty(id)) {
+            delete params.id;
+        }
+        
+        const id = params.id || 0;
+
+        {{uppercaseEntity}}
+            .query()
+            // @TODO: get the old data, then compare only the edited fields
+            .updateAndFetchById(id, req.body)
+            .then(({{lowercaseEntity}}Obj) => { 
+                let resultObj = this.formatResponse(false, "{{uppercaseEntity}} updated", {{lowercaseEntity}}Obj);
+                res.status(200).json(resultObj);
+            })
+            .catch((err) => {
+                console.log(err);
+                let resultObj = this.formatResponse(true, 'Invalid {{lowercaseEntity}} data.');
+                res.status(400).json(resultObj); 
+            });
+    }
+
+    add = (req, res) => {
+        let params = this.filterParams(
+            this.getParams(req), 
+            {{uppercaseEntity}}.upsertBlackList
+        );
+
+        if (params.hasOwnProperty('id')) {
+            delete params.id;
+        }
+        
+        {{uppercaseEntity}}
+            .query()
+            .insertAndFetch(params)
+            .then(({{lowercaseEntity}}Obj) => { 
+                let resultObj = this.formatResponse(false, "{{uppercaseEntity}} added", {{lowercaseEntity}}Obj);
+                res.status(200).json(resultObj);
+            })
+            .catch((err) => {
+                console.log(err);
+                let resultObj = this.formatResponse(true, 'Invalid {{lowercaseEntity}} data.');
+                res.status(400).json(resultObj); 
+            });
+    }
+
+    delete = (req, res) => {
+        let params = this.getParams(req);
+        let id = params.id || 0;
+
+        {{uppercaseEntity}}
+            .query()
+            .deleteById(id)
+            .then(() => {
+                let resultObj = this.formatResponse(false, '{{uppercaseEntity}} deleted.', {});
+                res.status(200).json(resultObj);
+            })
+            .catch((err) => {
+                console.log(err);
+                let resultObj = this.formatResponse(true, 'Invalid {{lowercaseEntity}} data.');
+                res.status(400).json(resultObj); 
+            });
+    }
+
+};
+
+export default new {{uppercaseEntity}}Controller();
