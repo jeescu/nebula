@@ -1,5 +1,5 @@
 {
-  "name": "Nebula API",
+  "name": "Nebula-API",
   "version": "0.0.0",
   "description": "API and micro-service generator",
   "main": "dist",

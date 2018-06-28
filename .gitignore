@@ -1,6 +1,7 @@
 /dist
 /logs
 /npm-debug.log
+/lib/templates/core/package-lock.json
 node_modules
 .DS_Store
 .vscode

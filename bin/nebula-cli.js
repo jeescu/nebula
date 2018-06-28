@@ -145,32 +145,3 @@ function addMigration(fileName, cmd) {
 function addSeeder(fileName, cmd) {
   console.log(fileName)
 }
-
-
-
-
-function main () {
-  // Path
-  var destinationPath = program.args.shift() || '.'
-  // App name
-  var appName = createAppName(path.resolve(destinationPath)) || 'hello-world'
-  // console.log(appName);
-  // Generate application
-  // emptyDirectory(destinationPath, function (empty) {
-  //   if (empty || program.force) {
-  //     createApplication(appName, destinationPath)
-  //   } else {
-  //     confirm('destination is not empty, continue? [y/N] ', function (ok) {
-  //       if (ok) {
-  //         process.stdin.destroy()
-  //         createApplication(appName, destinationPath)
-  //       } else {
-  //         console.error('aborting')
-  //         exit(1)
-  //       }
-  //     })
-  //   }
-  // })
-}
-
-
