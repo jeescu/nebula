@@ -1,62 +1,41 @@
 ![logo](https://raw.githubusercontent.com/jeescu/nebula/master/nebula-logo.png)
 
-Node API middleware framework.
-
-Build fast configurable and lightweight API gateway or API middleware  to your APIs and services.
-
->Entry point for your APIs and microservices.
->Implements architecture and principles.
->Extendable through plugins.
+> A micro-frame .. ah shut up.
  
 ### Getting Started
 
 #### Installation
-Installing by npm
 
-```
+```bash
 $ npm install nebula --save -g
 ```
 
-#### Create a project
-```
-$ nebula create my_middleware
+#### Create project.
+
+```bash
+$ nebula create my_project
 ```
 
-#### Create a model
-A model can be your module or a group of modules.
+#### Creating predefined controller, model, migration and seeder files.
 
-```
-$ nebula model
-```
-
-#### Create method on model
-You can add more methods to your model by simply reentering the command below.
-
-```
-$ nebula method
+```bash
+$ nebula add:model userModel
+$ nebula add:controller userController
+$ nebula add:migration userTableMigration
+$ nebula add:seeder userTableSeeder
 ```
 
-Now you created a nebula project and initially added a sample model and methods.
+#### Start your project in dev mode.
+```bash
+$ nebula run
+```
 
 ### Deployment
 
 Bundle your application.
 
-```
+```bash
 $ nebula build
 ```
 
-Then run node on the folder.
-
-```
-$ nebula
-```
-
-This is equivalent to `node index.js`
-
-### Debugging
-#### Development
-Readable nebula errors should be thrown
-
-#### Production
-The build code is not minified but just simplified the structure and contents, so your code will still be readable as before.
+### Testing

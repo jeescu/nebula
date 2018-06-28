@@ -1,0 +1,28 @@
+{
+  "name": "nebula",
+  "version": "0.0.0",
+  "description": "Experimental NodeJS micro-framework for building micro-services and APIs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeescu/nebula.git"
+  },
+  "author": "John Edward Escuyos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeescu/nebula/issues"
+  },
+  "homepage": "https://github.com/jeescu/nebula#readme",
+  "main": "bin/nebula-cli.js",
+  "preferGlobal": true,
+  "bin": {
+    "nebula": "./bin/nebula-cli.js"
+  },
+  "dependencies": {
+    "commander": "^2.15.1",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0"
+  }
+}
