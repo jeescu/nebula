@@ -1,42 +1,41 @@
 ![logo](https://raw.githubusercontent.com/jeescu/nebula/master/nebula-logo.png)
 
-> A micro-frame .. ah shut up.
+> A simple NodeJS API / micro-service project generator.
+
+### Installation
+
+```bash
+> npm install nebula -g
+```
 
 ### Getting Started
 
-#### Installation
+See available command options.
 
 ```bash
-$ npm install nebula --save -g
+> nebula --help
 ```
 
 #### Create project
 
 ```bash
-$ nebula create my_project
+> nebula create my_project
 ```
+
+Change dir to your project so you can execute the next available commands.
 
 #### Creating predefined controller, model, migration and seeder files
 
 ```bash
-$ nebula add:model userModel
-$ nebula add:controller userController
-$ nebula add:migration userTableMigration
-$ nebula add:seeder userTableSeeder
+> nebula add:model facet
+> nebula add:controller facet
+> nebula add:migration create_facet_table
+> nebula add:seeder table_facet_seeder
 ```
 
-#### Start your project in dev mode
+#### Executing migrations and seeders
 
-```bash
-$ nebula run
-```
+See [Knex](https://knexjs.org) official documentation.
 
-### Deployment
-
-Bundle your application.
-
-```bash
-$ nebula build
-```
-
-### Testing
+#### Contributors:
+- Richard Malibiran ([rmalibiran](https://github.com/rmalibiran)): core templates owner.

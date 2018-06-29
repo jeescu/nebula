@@ -28,26 +28,23 @@ program.command('add:model <filename>')
 
 program.command('add:controller <filename>')
   .description('generate controller file with resource (--resource) options')
-  .option('-r --resource', 'Add controller resources for your model')
+  .option('-r, --resource', 'Add controller resources for your model')
   .action(addController)
 
 program.command('add:migration <filename>')
-  .description('generate table migration file')
+  .description('generate table migration file, (uses Knex command)')
   .action(addMigration)
 
 program.command('add:seeder <filename>')
-  .description('generate table seeder file')
+  .description('generate table seeder file, (uses Knex command)')
   .action(addSeeder)
-
-program.command('knex <command>')
-  .description('using the Knex CLI with nebula configurations')
-  .action(useKnex)
 
 // program.command('build', 'build for production mode')
 //   .action(function(file) { console.log(file); })
 
-// program.command('run', 'start the project in development mode')
-//   .action(function(file) { console.log(file); })
+program.command('run')
+  .description('start the project in development mode')
+  .action(runDevelopment)
 
 program.parse(process.argv);
 
@@ -66,7 +63,7 @@ function copyDirTemplate (from, to, fn) {
       console.error(err)
       return;
     }
-    console.log('Done.')
+    fn()
   });
 }
 
@@ -92,8 +89,13 @@ function createApplication(dir, cmd) {
   var appName = dir || 'hello-world'
   console.info('Generating application:', appName)
 
+  var installDependencies = function() {
+    console.log('Installing npm dependencies..')
+    shell.exec('npm install --prefix ' + process.cwd() + '/' + appName)
+  }
+
   mkdirp(appName)
-  copyDirTemplate('core', dir)
+  copyDirTemplate('core', dir, installDependencies)
 }
 
 /**
@@ -113,7 +115,7 @@ function addModel(fileName, cmd) {
  */
 
 function addController(fileName, cmd) {
-  add('controller', fileName);
+  add('controller', fileName, cmd);
 }
 
 /**
@@ -123,7 +125,10 @@ function addController(fileName, cmd) {
  */
 
 function addMigration(fileName, cmd) {
-  add('migration', fileName);
+  useKnex({
+    cmd: 'migrate:make',
+    fileName: fileName
+  });
 }
 
 /**
@@ -133,16 +138,24 @@ function addMigration(fileName, cmd) {
  */
 
 function addSeeder(fileName, cmd) {
-  add('seeder', fileName);
+  useKnex({
+    cmd: 'seed:make',
+    fileName: fileName
+  });
 }
 
+function runDevelopment() {
+  var runScript = 'nodemon -w src --exec \"babel-node src --presets es2015,stage-0\" --prefix ' + process.cwd()
+  shell.exec(runScript)
+}
 
-function useKnex(command, cmd) {
-  var fileName = process.argv[4]
-
-  if (!fileName) {
-    process.exit();
-  }
-
-  shell.exec('knex ' + command + ' '  + fileName + ' --cwd');
+/**
+ * Knex commands
+ * 
+ * @param {*} config 
+ */
+function useKnex(config) {
+  var fileName = config.fileName || ''
+  var knexfilePath = __dirname + '/../knexfile.js'
+  shell.exec('knex --knexfile=' + knexfilePath + ' ' + config.cmd + ' '  + fileName + ' --cwd');
 }

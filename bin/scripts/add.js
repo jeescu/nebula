@@ -72,8 +72,8 @@ function streamToStr (stream, cb) {
 }
 
 function renderFile (cb) {
-  temp = Mustache.render(temp, config);
-  cb();
+    temp = Mustache.render(temp, config);
+    cb();
 }
 
 function toStdout (cb) {
@@ -94,10 +94,13 @@ function wasNotFound (err) {
  * Generate Controller file.
  *
  * @param {*} name
+ * @param {boolean} isResources
  */
-function generateController(name) {
+function generateController(name, isResource) {
+  var template = isResource ? 'resource.controller.mustache' : 'empty.controller.mustache';
+  
   name = name;
-  templateArg = path.join(TEMPLATE_DIR, '/controller/controller.mustache')
+  templateArg = path.join(TEMPLATE_DIR, '/controller/' + template);
   outputArg =  'src/controllers/'+snakeToCamel(name)+'Controller.js';
   config = {
       uppercaseEntity: snakeToCamel(name).capitalizeFirstLetter(),
@@ -128,24 +131,24 @@ function generateModel(name) {
   run(readTemplate, renderFile, toStdout);
 }
 
-function add(type, name) {
+/**
+ * Add script to generate configured
+ * model and controller templates
+ *
+ * @param {*} type
+ * @param {*} name
+ * @param {*} opt
+ */
+function add(type, name, opt) {
   switch(type) {
     case 'controller':
-      console.log('generating controller:', name)
-      generateController(name)
+      console.log('Generating controller:', name)
+      generateController(name, opt.resource)
       break;
 
     case 'model':
       console.log('Generating model:', name)
       generateModel(name)
-      break;
-
-    case 'migration':
-      console.log('Generating migration table:', name)
-      break;
-
-    case 'seeder':
-      console.log('Generating seeder table:', name)
       break;
 
     default:
