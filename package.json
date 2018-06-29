@@ -1,7 +1,7 @@
 {
   "name": "nebula",
   "version": "0.0.0",
-  "description": "Experimental NodeJS micro-framework for building micro-services and APIs",
+  "description": "A simple NodeJS API / micro-service project generator.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,6 +20,11 @@
   "bin": {
     "nebula": "./bin/nebula-cli.js"
   },
+  "files": [
+    "bin",
+    "lib",
+    "knexfile.js"
+  ],
   "dependencies": {
     "commander": "^2.15.1",
     "knex": "^0.14.6",
