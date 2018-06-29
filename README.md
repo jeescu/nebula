@@ -5,7 +5,7 @@
 ### Installation
 
 ```bash
-> npm install nebula -g
+> npm install @jeescu/nebula -g
 ```
 
 ### Getting Started
