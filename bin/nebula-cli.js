@@ -12,6 +12,7 @@ var add = require('./scripts/add');
 
 var VERSION = require('../package').version
 var TEMPLATE_DIR = path.join(__dirname, '..', 'lib/templates')
+var PROJECT_CORE_URL = 'https://github.com/jeescu/nebula-core.git'
 
 program
   .name('nebula')
@@ -89,13 +90,12 @@ function createApplication(dir, cmd) {
   var appName = dir || 'hello-world'
   console.info('Generating application:', appName)
 
-  var installDependencies = function() {
-    console.log('Installing npm dependencies..')
-    shell.exec('npm install --prefix ' + process.cwd() + '/' + appName)
-  }
+  // getting core project template
+  shell.exec('git clone --depth=1 ' + PROJECT_CORE_URL + ' ' + appName + ' && rm -rf ' + appName + '/.git')
 
-  mkdirp(appName)
-  copyDirTemplate('core', dir, installDependencies)
+  // var installDependencies = function() {
+  console.log('Installing npm dependencies ...')
+  shell.exec('npm install --prefix ' + process.cwd() + '/' + appName)
 }
 
 /**
